@@ -63,16 +63,16 @@ export default class App extends Component {
     });
   }
 
-  checkStage1(clickedNumber) {
+  checkStage1(clickedNumber, idx) {
     switch (this.state.curNumber) {
       case 1:
-        return clickedNumber === 2;
+        return idx === 1;
       case 2:
-        return clickedNumber === 2;
+        return idx === 1;
       case 3:
-        return clickedNumber === 3;
+        return idx === 2;
       case 4:
-        return clickedNumber === 4;
+        return idx === 3;
       default:
         return false;
     }
@@ -223,7 +223,10 @@ export default class App extends Component {
             </div>
           </button>
         }
-        <button onClick={this.toggleInstructions}>
+        <button
+          onClick={this.toggleInstructions}
+          className="instructions-btn"
+        >
           {this.state.showInstructions ? 'Hide instructions' : 'Show instructions'}
         </button>
         {this.state.showInstructions &&
