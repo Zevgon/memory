@@ -188,27 +188,23 @@ export default class App extends Component {
         {this.state.won &&
           <div>Yay you win!!</div>
         }
-        {this.state.stage &&
-          <div
-            className="stage-num center-number"
-          >Stage: {this.state.stage}
-          </div>
-        }
-        {this.state.curNumber &&
-          <div className="main-number center-number">{this.state.curNumber}</div>
-        }
-        {this.state.fourNumbers &&
-          <div className="numbers-container">
-            {this.state.fourNumbers.map((number, idx) => (
-              <button
-                className="center-number secondary-number"
-                key={number}
-                onClick={() => this.handleClick(number, idx)}
-              >{number}
-              </button>
-            ))}
-          </div>
-        }
+        <div className="main-content">
+          {this.state.curNumber &&
+            <button className="main-number center-number">{this.state.curNumber}</button>
+          }
+          {this.state.fourNumbers &&
+            <div className="numbers-container">
+              {this.state.fourNumbers.map((number, idx) => (
+                <button
+                  className="center-number secondary-number"
+                  key={number}
+                  onClick={() => this.handleClick(number, idx)}
+                >{number}
+                </button>
+              ))}
+            </div>
+          }
+        </div>
         {!this.state.running &&
           <button
             onClick={this.start}
