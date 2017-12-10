@@ -60,6 +60,7 @@ export default class App extends Component {
       stage: 1,
       lost: false,
       won: false,
+      clickTracker: [],
     });
   }
 
@@ -180,7 +181,20 @@ export default class App extends Component {
     });
   }
 
+  prettyPrintHistory() {
+    if (!this.state.stage) return;
+    for (let i = 0; i < this.state.stage - 1; i += 1) {
+      const stage = i + 1;
+      const info = this.getTrackedInfo(stage);
+      console.log('Stage:', stage);
+      console.log('Position:', info.position + 1);
+      console.log('Value:', info.value);
+      console.log('\n');
+    }
+  }
+
   render() {
+    this.prettyPrintHistory();
     return (
       <div className="game-container">
         {this.state.lost &&
