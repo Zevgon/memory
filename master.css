@@ -1,4 +1,4 @@
-body {
+body, div {
   box-sizing: border-box;
   position: relative;
 }
@@ -52,8 +52,13 @@ button {
 
 .main-content {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  margin-bottom: 20px;
+}
+
+.all-numbers {
+  display: flex;
+  flex-direction: column;
 }
 
 .main-number {
@@ -69,7 +74,6 @@ button {
   flex-wrap: wrap;
   width: 500px;
   justify-content: space-between;
-  margin-bottom: 20px;
 }
 
 .secondary-number {
@@ -82,4 +86,32 @@ button {
 .stage-num {
   font-size: 20px;
   margin-bottom: 20px;
+}
+
+.light {
+  width: 30px;
+  height: 20px;
+}
+
+.on {
+  background-color: #11a417;
+}
+
+.stage-tracker {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  height: 320px;
+  margin-left: 30px;
+  padding: 12px 10px;
+  justify-content: space-between;
+  width: 75px;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.light {
+  border-radius: 5px;
+  width: 50px;
+  height: 35px;
 }

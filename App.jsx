@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
+import StageTracker from './StageTracker';
 import './master.css';
 
 const shuffle = (array) => {
@@ -188,23 +189,30 @@ export default class App extends Component {
         {this.state.won &&
           <div>Yay you win!!</div>
         }
+
         <div className="main-content">
-          {this.state.curNumber &&
-            <button className="main-number center-number">{this.state.curNumber}</button>
-          }
-          {this.state.fourNumbers &&
-            <div className="numbers-container">
-              {this.state.fourNumbers.map((number, idx) => (
-                <button
-                  className="center-number secondary-number"
-                  key={number}
-                  onClick={() => this.handleClick(number, idx)}
-                >{number}
-                </button>
-              ))}
-            </div>
+          <div className="all-numbers">
+            {this.state.curNumber &&
+              <button className="main-number center-number">{this.state.curNumber}</button>
+            }
+            {this.state.fourNumbers &&
+              <div className="numbers-container">
+                {this.state.fourNumbers.map((number, idx) => (
+                  <button
+                    className="center-number secondary-number"
+                    key={number}
+                    onClick={() => this.handleClick(number, idx)}
+                  >{number}
+                  </button>
+                ))}
+              </div>
+            }
+          </div>
+          {this.state.stage &&
+            <StageTracker stage={this.state.stage} />
           }
         </div>
+
         {!this.state.running &&
           <button
             onClick={this.start}
