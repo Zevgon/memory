@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import './master.css';
 
@@ -22,7 +23,7 @@ const shuffle = (array) => {
   return array;
 };
 
-const getFourNumbers = () => shuffle(new Array(4).fill(0).map((_, idx) => idx));
+const getFourNumbers = () => shuffle(new Array(4).fill(0).map((_, idx) => idx + 1));
 const getMainNumber = () => Math.floor((Math.random() * 4) + 1);
 
 export default class App extends Component {
@@ -34,9 +35,18 @@ export default class App extends Component {
       running: false,
       stage: null,
       lost: false,
+      clickTracker: [],
     };
     this.start = this.start.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  getTrackedInfo(stage) {
+    const info = this.state.clickTracker[stage - 1];
+    return {
+      position: info[0],
+      value: info[1],
+    };
   }
 
   start() {
@@ -50,16 +60,97 @@ export default class App extends Component {
     });
   }
 
-  check(number) {
-    return number === 2;
+  checkStage1(clickedNumber) {
+    switch (this.state.curNumber) {
+      case 1:
+        return clickedNumber === 2;
+      case 2:
+        return clickedNumber === 2;
+      case 3:
+        return clickedNumber === 3;
+      case 4:
+        return clickedNumber === 4;
+      default:
+        return false;
+    }
   }
 
-  handleClick(number) {
-    if (this.check(number)) {
+  checkStage2(clickedNumber, idx) {
+    switch (this.state.curNumber) {
+      case 1:
+        return clickedNumber === 4;
+      case 2:
+        return idx === this.getTrackedInfo(1).position;
+      case 3:
+        return idx === 0;
+      case 4:
+        return idx === this.getTrackedInfo(1).position;
+      default:
+        return false;
+    }
+  }
+
+  checkStage3(clickedNumber, idx) {
+    switch (this.state.curNumber) {
+      case 1:
+        return clickedNumber === this.getTrackedInfo(2).value;
+      case 2:
+        return clickedNumber === this.getTrackedInfo(1).value;
+      case 3:
+        return idx === 2;
+      case 4:
+        return clickedNumber === 4;
+      default:
+        return false;
+    }
+  }
+
+  checkStage4(clickeNumber, idx) {
+    switch (this.state.curNumber) {
+      case 1:
+        return idx === this.getTrackedInfo(1).position;
+      case 2:
+        return idx === 0;
+      case 3:
+        return idx === this.getTrackedInfo(2).position;
+      case 4:
+        return idx === this.getTrackedInfo(2).position;
+      default:
+        return false;
+    }
+  }
+
+  checkStage5(clickedNumber) {
+    switch (this.state.curNumber) {
+      case 1:
+        return clickedNumber === this.getTrackedInfo(1).value;
+      case 2:
+        return clickedNumber === this.getTrackedInfo(2).value;
+      case 3:
+        return clickedNumber === this.getTrackedInfo(4).value;
+      case 4:
+        return clickedNumber === this.getTrackedInfo(3).value;
+      default:
+        return false;
+    }
+  }
+
+  check(number, idx) {
+    return this[`checkStage${this.state.stage}`](number, idx);
+  }
+
+  handleClick(clickedNumber, idx) {
+    const clickTracker = this.state.clickTracker.map(tups => [...tups]);
+    clickTracker.push([idx, clickedNumber]);
+
+    if (this.check(clickedNumber, idx)) {
       if (this.state.stage === 5) {
         this.setState({
           won: true,
           running: false,
+          fourNumbers: null,
+          curNumber: null,
+          stage: null,
         });
         return;
       }
@@ -67,11 +158,15 @@ export default class App extends Component {
         stage: this.state.stage + 1,
         fourNumbers: getFourNumbers(),
         curNumber: getMainNumber(),
+        clickTracker,
       });
     } else {
       this.setState({
         running: false,
         lost: true,
+        fourNumbers: null,
+        curNumber: null,
+        stage: null,
       });
     }
   }
@@ -96,11 +191,11 @@ export default class App extends Component {
         }
         {this.state.fourNumbers &&
           <div className="numbers-container">
-            {this.state.fourNumbers.map(number => (
+            {this.state.fourNumbers.map((number, idx) => (
               <button
                 className="center-number secondary-number"
                 key={number}
-                onClick={() => this.handleClick(number)}
+                onClick={() => this.handleClick(number, idx)}
               >{number}
               </button>
             ))}
