@@ -1,6 +1,33 @@
 body {
   box-sizing: border-box;
+  position: relative;
 }
+
+button {
+  outline: none;
+}
+
+.start-button:focus {
+  background: url('./images/pressed.png');
+}
+
+.start-button {
+  position: relative;
+  width: 102px;
+  height: 102px;
+  border: none;
+  background: url('./images/unpressed.png');
+}
+
+.start-text {
+  color: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-58%, -70%, 0);
+  font-size: 16px;
+}
+
 
 .center-number {
   display: flex;
@@ -37,4 +64,9 @@ body {
   margin: 5px;
   border: 1px solid black;
   font-size: 34px;
+}
+
+.stage-num {
+  font-size: 20px;
+  margin-bottom: 20px;
 }
