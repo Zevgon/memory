@@ -7,6 +7,11 @@ button {
   outline: none;
 }
 
+.instructions {
+  width: 700px;
+  height: 700px;
+}
+
 .start-button:focus {
   background: url('./images/pressed.png');
 }

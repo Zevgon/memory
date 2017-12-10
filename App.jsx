@@ -36,9 +36,11 @@ export default class App extends Component {
       stage: null,
       lost: false,
       clickTracker: [],
+      showInstructions: false,
     };
     this.start = this.start.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.toggleInstructions = this.toggleInstructions.bind(this);
   }
 
   getTrackedInfo(stage) {
@@ -171,6 +173,12 @@ export default class App extends Component {
     }
   }
 
+  toggleInstructions() {
+    this.setState({
+      showInstructions: !this.state.showInstructions,
+    });
+  }
+
   render() {
     return (
       <div className="game-container">
@@ -210,6 +218,12 @@ export default class App extends Component {
               Start
             </div>
           </button>
+        }
+        <button onClick={this.toggleInstructions}>
+          {this.state.showInstructions ? 'Hide instructions' : 'Show instructions'}
+        </button>
+        {this.state.showInstructions &&
+          <img className="instructions" alt="instructions" src="./images/instructions.png" />
         }
       </div>
     );
